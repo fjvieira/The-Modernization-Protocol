@@ -1,0 +1,13 @@
+{
+    "python.testing.pytestArgs": [
+        "test"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "java.compile.nullAnalysis.mode": "disabled",
+    "chat.tools.terminal.autoApprove": {
+        "pdm": true,
+        ".\\.venv\\Scripts\\python.exe": true,
+        "&": true
+    }
+}

@@ -1,73 +1,33 @@
-# The Modernization Protocol Course Series
+# Shipping Service
 
-This repository is used as part of an [O'Reilly](https://www.oreilly.com/) live
-course series, **The Modernization Protocol**, created by [Fernando J Vieira](https://www.linkedin.com/in/fernandojvieira/).
+Python/FastAPI implementation of the legacy shipping calculation service.
 
-The legacy application is intended for use in the courses. The code, including its
-imperfections, is provided for educational purposes only.
+## Setup
 
-## Shipping Service
-
-A microservice for calculating shipping costs, including loyalty benefits and promotions.
-
-### Stack
-
-- Java 11
-- Lombok
-- Spring Boot 2.7.18
-- Maven Wrapper
-- PostgreSQL
-- JUnit 5 and Mockito
-
-### Prerequisites
-
-Install or provide:
-
-- Java 11
-- PostgreSQL
-    - The application expects a PostgreSQL database named `shipping_db`.
-    - The database schema is in [`src/main/resources/schema.sql`](src/main/resources/schema.sql).
-- A carrier-rate HTTP endpoint (configurable by `external.carrier.url`)
-
-Connection and carrier settings can be changed in [`src/main/resources/application.properties`](src/main/resources/application.properties).
-
-### Run Locally
-
-From the repository root, use the Maven Wrapper:
+Requires Python 3.13 and PostgreSQL. Install dependencies with PDM:
 
 ```powershell
-.\mvnw.cmd spring-boot:run
+pdm install
 ```
 
-The application starts on:
+Set `DATABASE_URL` and `CARRIER_URL` in `.env` when they differ from the defaults. The database schema is in `db/schema.sql` and the default carrier endpoint is `http://localhost:8081/api/v1/rates/evaluate`.
 
-```text
-http://localhost:8080
+## Run
+
+```powershell
+pdm dev
 ```
 
-Calculate shipping with:
+The API is available at `http://localhost:8000`. The main endpoint is:
 
 ```text
 POST /api/v2/checkout/calculate-shipping
 ```
 
-The request accepts cart, destination, parcel, customer tier, and promotion details.
+It accepts the legacy JSON request contract and returns the calculated shipping fee, discounts, surcharges, and applied fee breakdown. Requests may supply `X-Trace-Id`; the same value is returned in the response header.
 
-To build the application:
-
-```powershell
-.\mvnw.cmd clean package
-```
-
-The packaged JAR is created under `target/`.
-
-### Run Tests
-
-Run the complete test suite:
+## Validate
 
 ```powershell
-.\mvnw.cmd test
+pdm check-all
 ```
-
-Test reports are written to `target/surefire-reports/`.
-

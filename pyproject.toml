@@ -1,0 +1,58 @@
+[project]
+name = "shipping-service-python"
+version = "0.1.0"
+description = "Part of Migrating Spec-less Code with AI and Parity O'Reilly live course."
+authors = [{ name = "Fernando J. Vieira" }]
+dependencies = [
+    "fastapi>=0.141.1", 
+    "pydantic>=2.13.5", 
+    "sqlmodel>=0.0.42", 
+    "asyncpg>=0.31.0", 
+    "greenlet>=3.5.6", 
+    "sqlalchemy>=2.0.54", 
+    "pydantic-settings>=2.15.0", 
+    "httpx>=0.27.0"
+]
+requires-python = ">=3.13,<3.14"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["setuptools>=70.0.0"]
+build-backend = "setuptools.build_meta"
+
+[dependency-groups]
+dev = [
+    "uvicorn[standard]>=0.30.0",
+    "pytest>=8.0.0",
+    "httpx>=0.27.0",
+    "ruff>=0.5.0",
+    "mypy>=2.3.1",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["test"]
+pythonpath = ["."]
+
+
+[tool.pdm]
+distribution = false
+
+[tool.pdm.scripts]
+test = "python -m pytest test/ -v"
+coverage = "python -m pytest test/ --cov src/ --cov-report term-missing -v"
+mypy = "python -m mypy src/"
+ruff = "python -m ruff check src/"
+ruff_fix = "python -m ruff check --fix src/"
+ruff_format = "python -m ruff format src/ test/"
+check-all = { composite = ["ruff", "format --check", "mypy", "test"] }
+#Uvicorn
+dev = "python -m uvicorn src.main:app --reload"
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+show_column_numbers = true
+show_error_codes = true
+pretty = true
+files = ["src"]
