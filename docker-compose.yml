@@ -1,0 +1,42 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: shipping_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: shipping_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./src/main/resources/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./db/seed-data.sql:/docker-entrypoint-initdb.d/02-seed-data.sql:ro
+      - postgres_data:/var/lib/postgresql/data
+  mock-carrier-api:
+    image: docker.io/mockserver/mockserver:5.15.0
+    container_name: mock_carrier_api
+    ports:
+      - "1080:1080"
+    environment:
+      MOCKSERVER_INITIALIZATION_JSON_PATH: /config/initializer.json
+    volumes:
+      - ./docker/mock-carrier-config.json:/config/initializer.json:ro     
+  app:
+    image: eclipse-temurin:11-jre
+    container_name: shipping_service
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./target/shipping-service-1.0.0.jar:/app/app.jar
+    working_dir: /app
+    command: ["java", "-jar", "app.jar"]
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/shipping_db
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+      EXTERNAL_CARRIER_URL: http://mock-carrier-api:1080/api/v1/rates/evaluate
+    depends_on:
+      - postgres
+      - mock-carrier-api           
+volumes:
+  postgres_data:

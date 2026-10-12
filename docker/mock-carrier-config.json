@@ -1,0 +1,177 @@
+[
+  {
+    "httpRequest": {
+      "method": "POST",
+      "path": "/api/v1/rates/evaluate",
+      "body": {
+        "type": "REGEX",
+        "regex": ".*99999.*"
+      }
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {"content-type": ["application/json"]},
+      "body": {
+        "baseRate": 18.00,
+        "surcharge": true,
+        "carrierCode": "FEDEX",
+        "estimatedDeliveryDays": "5"
+      }
+    }
+  },
+  {
+    "httpRequest": {
+      "method": "POST",
+      "path": "/api/v1/rates/evaluate",
+      "body": {
+        "type": "REGEX",
+        "regex": ".*X0A 0A0.*"
+      }
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {"content-type": ["application/json"]},
+      "body": {
+        "baseRate": 24.00,
+        "surcharge": true,
+        "carrierCode": "UPS",
+        "estimatedDeliveryDays": "8"
+      }
+    }
+  },
+  {
+    "httpRequest": {
+      "method": "POST",
+      "path": "/api/v1/rates/evaluate",
+      "body": {
+        "type": "REGEX",
+        "regex": ".*88888.*"
+      }
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {"content-type": ["application/json"]},
+      "body": {
+        "baseRate": 21.50,
+        "surcharge": true,
+        "carrierCode": "DHL",
+        "estimatedDeliveryDays": "7"
+      }
+    }
+  },
+  {
+    "httpRequest": {
+      "method": "POST",
+      "path": "/api/v1/rates/evaluate",
+      "body": {
+        "type": "REGEX",
+        "regex": ".*77777.*"
+      }
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {"content-type": ["application/json"]},
+      "body": {
+        "baseRate": 13.25,
+        "surcharge": true,
+        "carrierCode": "UNKNOWN",
+        "estimatedDeliveryDays": "10"
+      }
+    }
+  },
+  {
+    "httpRequest": {
+      "method": "POST",
+      "path": "/api/v1/rates/evaluate",
+      "body": {
+        "type": "REGEX",
+        "regex": ".*66666.*"
+      }
+    },
+    "httpResponse": {
+      "statusCode": 500,
+      "headers": {"content-type": ["application/json"]},
+      "body": {"message": "Carrier service unavailable"}
+    }
+  },
+  {
+    "httpRequest": {
+      "method": "POST",
+      "path": "/api/v1/rates/evaluate",
+      "body": {
+        "type": "REGEX",
+        "regex": ".*55555.*"
+      }
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {"content-type": ["application/json"]},
+      "body": {
+        "surcharge": false,
+        "carrierCode": "FEDEX"
+      }
+    }
+  },
+  {
+    "httpRequest": {
+      "method": "POST",
+      "path": "/api/v1/rates/evaluate"
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {"content-type": ["application/json"]},
+      "body": {
+        "baseRate": 15.00,
+        "surcharge": false,
+        "carrierCode": "MOCK_CARRIER",
+        "estimatedDeliveryDays": "6"
+      }
+    }
+  },
+  {
+    "httpRequest": {
+      "method": "POST",
+      "path": "/api/v1/rates/evaluate",
+      "body": {"type": "REGEX", "regex": ".*44444.*"}
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {"content-type": ["application/json"]},
+      "body": {
+        "baseRate": 0.00,
+        "surcharge": false,
+        "carrierCode": "FEDEX",
+        "estimatedDeliveryDays": "12"
+      }
+    }
+  },
+  {
+    "httpRequest": {
+      "method": "POST",
+      "path": "/api/v1/rates/evaluate",
+      "body": {"type": "REGEX", "regex": ".*33333.*"}
+    },
+    "httpResponse": {
+      "statusCode": 200,
+      "headers": {"content-type": ["application/json"]},
+      "body": {
+        "baseRate": 16.67,
+        "surcharge": true,
+        "carrierCode": null,
+        "estimatedDeliveryDays": "9"
+      }
+    }
+  },
+  {
+    "httpRequest": {
+      "method": "POST",
+      "path": "/api/v1/rates/evaluate",
+      "body": {"type": "REGEX", "regex": ".*22222.*"}
+    },
+    "httpResponse": {
+      "statusCode": 503,
+      "headers": {"content-type": ["application/json"]},
+      "body": {"message": "Carrier temporarily unavailable"}
+    }
+  }
+]
